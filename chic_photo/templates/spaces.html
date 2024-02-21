@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block sublink %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/slidershow.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="slideshow-container">
+    {% for studio in list_studios %}
+    <div class="slideshow-item">
+        {% load static %}
+        <img src="{{ studio.image.url }}" alt="">
+        <div class="slideshow-item-text">
+            <h5>{{studio.spaceName}}</h5>
+            <p>Описание: {{studio.description}}</p>
+            <p>Цена: {{studio.costPerHour}} рублей за час</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

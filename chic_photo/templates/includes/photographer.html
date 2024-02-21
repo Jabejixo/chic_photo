@@ -1,0 +1,18 @@
+
+<h1>Форма фотографа</h1>
+<form method="post" action="{% url 'edit' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_skills">Навыки:</label>
+        {{ form.skills }}
+    </div>
+    <div class="form-group">
+        <label for="id_schedule">График работы:</label>
+        {{ form.schedule }}
+    </div>
+    <div class="form-group">
+        <label for="id_new_photo">Загрузить новое фото:</label>
+        {{ portfolio_form.photo }}
+    </div>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>

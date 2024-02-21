@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Form</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Datepicker Plus CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  <!-- Tempus Dominus Bootstrap 4 Date & Time Picker CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5" style="z-index: 1100">
+  <h2>Order Form</h2>
+  <form method="post" action="orders/getorderform/">
+    {% csrf_token %}
+        <div class="mb-3">
+        <label for="id_photographerID" class="form-label">Photographer</label>
+        {{ form.photographerID }}
+    </div>
+    <div class="mb-3">
+        <label for="id_serviceID" class="form-label">Service</label>
+        {{ form.serviceID }}
+    </div>
+      <div class="mb-3">
+        <label for="id_spaceID" class="form-label">Studio Space</label>
+        {{ form.spaceID }}
+    </div>
+    <div class="mb-3">
+        <label for="scheduledDate" class="form-label">Scheduled Date</label>
+        <input type="text" class="form-control" id="scheduledDate" name="scheduledDate" required/>
+    </div>
+    <div class="mb-3">
+        <label for="timeFrom" class="form-label">Time From</label>
+        <div class="input-group date" id="timeFrom" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" data-target="#timeFrom" name="timeFrom" required/>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="timeTo" class="form-label">Time To</label>
+        <div class="input-group date" id="timeTo" data-target-input="nearest">
+            <input type="text" class="form-control datetimepicker-input" data-target="#timeTo" name="timeTo" required/>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+</body>
+</html>

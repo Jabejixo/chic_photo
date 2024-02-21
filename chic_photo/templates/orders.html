@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+    <div class="container">
+        <h1>All Orders</h1>
+        {% if all_orders %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Service</th>
+                    <th>Photographer</th>
+                    <th>Studio Space</th>
+                    <th>Scheduled Date</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in all_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.userID.first_name }} {{ order.userID.last_name }}</td>
+                    <td>{{ order.serviceID.serviceName }}</td>
+                    <td>{{ order.photographerID.user.first_name }} {{ order.photographerID.user.last_name }}</td>
+                    <td>{{ order.spaceID.spaceName }}</td>
+                    <td>{{ order.scheduledDate }}</td>
+                    <td>{{ order.timeFrom }}</td>
+                    <td>{{ order.timeTo }}</td>
+                    <td>{{ order.totalCost }}</td>
+                    {% if request.user.RoleID.id == 3 %}
+                    <td>
+                        <a href="{% url 'generate_invoice' order.id %}" class="btn btn-primary">Generate Invoice</a>
+                    </td>
+                    {% elif request.user.RoleID.id == 1 %}
+                        <td>
+                            <form action="{% url 'cancel_order' order.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit"  class="btn btn-danger">Отменить запись</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Unfortunately, there are no orders.</p>
+        {% endif %}
+
+        <h1>Orders for Today</h1>
+        {% if today_orders %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>User</th>
+                    <th>Service</th>
+                    <th>Photographer</th>
+                    <th>Studio Space</th>
+                    <th>Scheduled Date</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in today_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.userID.first_name }} {{ order.userID.last_name }}</td>
+                    <td>{{ order.serviceID.serviceName }}</td>
+                    <td>{{ order.photographerID.user.first_name }} {{ order.photographerID.user.last_name }}</td>
+                    <td>{{ order.spaceID.spaceName }}</td>
+                    <td>{{ order.scheduledDate }}</td>
+                    <td>{{ order.timeFrom }}</td>
+                    <td>{{ order.timeTo }}</td>
+                    <td>{{ order.totalCost }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Unfortunately, there are no orders for today.</p>
+        {% endif %}
+    </div>
+{% endblock %}

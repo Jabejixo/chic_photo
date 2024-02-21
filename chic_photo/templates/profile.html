@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block sublink %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h2 class="card-title">{{ user.first_name }} {{ user.last_name }}</h2>
+                <p class="card-text">Email: {{ user.email }}</p>
+                <p class="card-text">Role: {{ role.roleName }}</p>
+                {% if role.id == 1 %}
+                    <button id="openModalButton" class="btn btn-primary" hx-get="edit_profile/" hx-target="#openModal" hx-swap="innerHTML" >Edit Profile</button>
+                    <a class="btn btn-primary" href="{% url 'orders' %}">View Records</a>
+                {% elif role.id == 2  %}
+                    <a class="btn btn-primary" href="{% url 'orders' %}">View Records</a>
+                    <button id="openModalButton" class="btn btn-primary" hx-get="edit_photographer/" hx-target="#openModal" hx-swap="innerHTML">Edit Photographer Profile</button>
+                {% elif role.id == 3 %}
+                    <a class="btn btn-primary" href="{% url 'orders' %}">View Records</a>
+                {% endif %}
+                <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Информация</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="openModal" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет, спасибо</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- Bootstrap JS and dependencies (optional) -->
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+
+    <!-- Bootstrap Datepicker Plus JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- Tempus Dominus Bootstrap 4 Date & Time Picker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    {% load static %}
+    <script src="{% static 'scripts/htmx.min.js' %}"></script>
+    <script src="{% static 'scripts/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        document.addEventListener("htmx:afterSwap", function(event) {
+            if (event.detail.target.matches('#openModal')) {
+      // Открываем модальное окно с использованием Bootstrap
+            const modal = new bootstrap.Modal(document.querySelector('#modal'));
+      // при нажатии на кнопку
+             modal.show();
+    }
+    });
+    </script>
+{% endblock %}

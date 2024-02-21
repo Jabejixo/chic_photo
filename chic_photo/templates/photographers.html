@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block sublink %}
+     <style>
+        /* Увеличение карточек */
+        .card {
+            margin-bottom: 20px;
+            border-radius: 15px; /* Добавим закругление углов */
+            min-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавим тень */
+        }
+
+        /* Стилизация кнопок переключения */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%; /* Уменьшим ширину кнопок */
+            background-color: rgba(0, 0, 0, 0.5); /* Цвет фона кнопок */
+            border-radius: 25px; /* Закруглим углы */
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: white; /* Цвет иконок */
+            border-radius: 50%; /* Закругленные иконки */
+            border: none;
+        }
+
+        /* При наведении меняем цвет фона кнопок */
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            background-color: rgba(0, 0, 0, 0.8); /* Цвет фона кнопок при наведении */
+        }
+
+        /* При наведении меняем цвет иконок */
+        .carousel-control-prev-icon:hover,
+        .carousel-control-next-icon:hover {
+            background-color: black; /* Цвет иконок при наведении */
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+   <div class="container">
+   {% for photographer in photographers %}
+        <div class="row">
+                <div class="container">
+                    <div class="card" style="min-width: 100%">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ photographer.user.first_name }}</h5>
+                            <p class="card-text">Skills: {{ photographer.skills }}</p>
+                            <p class="card-text">Schedule: {{ photographer.schedule }}</p>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Photo Gallery</h5>
+                            <div id="photoCarousel{{ photographer.id }}" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for photo in photographer.photodirectory_set.all %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <img class="d-block w-100" src="{{ photo.photo.url }}" alt="Photo">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <a class="carousel-control-prev" href="#photoCarousel{{ photographer.id }}" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#photoCarousel{{ photographer.id }}" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

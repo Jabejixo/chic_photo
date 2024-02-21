@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block sublink %}
+      <!-- Bootstrap Datepicker Plus CSS -->
+    <style>
+    .main-photo {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      margin-bottom: 20px;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+ <!-- Кнопка для отправки запроса на сервер и обновления модального окна -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+              <img src="{% static 'images/img.png' %}" alt="Main Photo" class="main-photo">
+            </div>
+      </div>
+      <div class="row">
+            <div class="col-md-12">
+              <h1>Welcome to ChicPhoto Studio</h1>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et gravida magna. Curabitur sed nisl non est ullamcorper facilisis. Mauris semper euismod magna, a laoreet elit convallis sed. Sed malesuada arcu vitae neque consectetur, nec blandit lorem pulvinar. Quisque ut tortor justo.</p>
+            </div>
+      </div>
+      <div class="row">
+            <div class="col-md-12">
+                <img src="{% static 'images/img_1.png' %}" alt="Secondary Photo" class="main-photo">
+            </div>
+      </div>
+        <button id="openModalButton" class="btn btn-primary" hx-get="orders/getorderform/" hx-target="#openModal" hx-swap="innerHTML">Записаться на фотосессию</button>
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Информация</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="openModal" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет, спасибо</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+
+    <!-- Bootstrap Datepicker Plus JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- Tempus Dominus Bootstrap 4 Date & Time Picker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    {% load static %}
+    <script src="{% static 'scripts/htmx.min.js' %}"></script>
+    <script src="{% static 'scripts/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        document.addEventListener("htmx:afterSwap", function(event) {
+            // Проверяем, что обновленный контент содержит элементы, которые нужно инициализировать
+            if (event.detail.target.querySelector("#scheduledDate")) {
+                $('#scheduledDate').datepicker({
+                  format: 'yyyy-mm-dd',
+                  startDate: 'today',
+                  autoclose: true,
+                  todayHighlight: true
+                });
+            }
+            if (event.detail.target.querySelector("#timeFrom")) {
+                $('#timeFrom').datetimepicker({
+                  format: 'HH:mm',
+                  stepping: 60,
+                  ignoreReadonly: true,
+                  allowInputToggle: false
+                });
+                $("#timeFrom").on("click", function (e) {
+                  $('#timeFrom').datetimepicker('show');
+                });
+            }
+            if (event.detail.target.querySelector("#timeTo")) {
+                $('#timeTo').datetimepicker({
+                  format: 'HH:mm',
+                  stepping: 60,
+                  ignoreReadonly: true,
+                  allowInputToggle: false
+                });
+                $("#timeTo").on("click", function (e) {
+                  $('#timeTo').datetimepicker('show');
+                });
+            }
+            if (event.detail.target.matches('#openModal')) {
+      // Открываем модальное окно с использованием Bootstrap
+            const modal = new bootstrap.Modal(document.querySelector('#modal'));
+      // при нажатии на кнопку
+             modal.show();
+    }
+    });
+    </script>
+{% endblock %}

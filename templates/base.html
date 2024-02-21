@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block sublink %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/bootstrap.min.css' %}">
+
+     <style>
+        /* Custom Styles */
+        html {
+          height: 100%;
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            /* Высота footer */
+            height: 30px;
+        }
+
+        body {
+            height: 100%;
+            min-height: 100%;
+        }
+        .card {
+            background-color: #F8C5B4;
+            border: none;
+            align-content: center;
+            width: 300px;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #F8C5B4;
+            border-color: #F8C5B4;
+        }
+        .btn-primary:focus,
+        .btn-primary.focus {
+            box-shadow: 0 0 0 0.2rem rgba(248, 197, 180, 0.5);
+        }
+        .btn-primary:hover {
+            background-color: #591E6E;
+            border-color: #591E6E;
+        }
+    </style>
+</head>
+<body>
+{% include 'includes/header.html' %}
+
+{% block main %}
+{% endblock %}
+
+
+{% include 'includes/footer.html' %}
+{% block scripts %}
+
+{% endblock %}
+
+
+</body>
+</html>
